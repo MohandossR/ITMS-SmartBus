@@ -18,3 +18,9 @@ def check_speed_alert(vehicle, speed_limit=None):
         "type": "NORMAL",
         "message": f"Speed within limit ({speed_limit} km/h)"
     }
+def check_ai_alerts(ai_status):
+    if ai_status.get("fire_detected"):
+        return "FIRE EMERGENCY"
+    if ai_status.get("dangerous_driving"):
+        return "DANGEROUS DRIVING"
+    return "NORMAL"
