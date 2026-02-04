@@ -1,26 +1,33 @@
 import requests
 import time
+import json
+
 
 def collect_ai_inputs():
-    """
-    Collects or simulates outputs from AI modules.
-    In real deployment, these would come from live AI modules.
-    """
+    try:
+        with open("ai/shared_state.json", "r") as f:
+            data = json.load(f)
+    except:
+        data = {}
+
+    passenger_count = data.get("passenger_count", 0)
+    driver_status = data.get("driver_status", "UNKNOWN")
 
     ai_inputs = {
-        "driver_status": "ALERT",
-        "attention_score": 85,
-        "passenger_count": 32,
-        "seat_vacancy": 8,
-        "fire": False,
-        "dangerous_driving": False,
-        "overcrowded": True,
+        "driver_status": driver_status,
+        "attention_score": data.get("attention_score", 0),
+        "passenger_count": passenger_count,
+        "seat_vacancy": data.get("seat_vacancy", 0),
+        "fire": data.get("fire_detected", False),
+        "dangerous_driving": driver_status in ["DANGEROUS DRIVING ⚠️", "DRIVER DISTRACTED 📱"],
+        "overcrowded": data.get("overcrowded", passenger_count > 40),
         "overspeed": False,
         "low_fuel": False,
         "engine_overheat": False
     }
 
     return ai_inputs
+
 
 
 def send_to_backend(payload):

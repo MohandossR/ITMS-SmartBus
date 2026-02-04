@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Bus – ITMS Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script>
+        async function fetchAIStatus() {
+        try {
+            const res = await fetch("http://127.0.0.1:5000/ai/status");
+            const data = await res.json();
+
+            document.getElementById("driver-status").innerText =
+                data.driver_status || "---";
+
+            document.getElementById("attention-score").innerText =
+                data.attention_score ? data.attention_score + "%" : "---";
+
+            document.getElementById("attention-bar").value =
+                data.attention_score || 0;
+
+            document.getElementById("passenger-count").innerText =
+                data.passenger_count ?? "---";
+
+            document.getElementById("seat-vacancy").innerText =
+                data.seat_vacancy ?? "---";
+
+        const alertsBox = document.getElementById("alerts-list");
+            alertsBox.innerHTML = "";
+
+        if (data.decisions && data.decisions.length > 0) {
+            data.decisions.forEach(alert => {
+                const li = document.createElement("li");
+                li.innerText = alert;
+                alertsBox.appendChild(li);
+            });
+        } else {
+            alertsBox.innerHTML = "<li>No alerts</li>";
+        }
+
+    } catch (err) {
+        console.error("Backend not reachable");
+    }
+}
+
+// Fetch every 2 seconds
+setInterval(fetchAIStatus, 2000);
+fetchAIStatus();
+</script>
+
+</head>
+<body>
+
+    <header>
+        <h1>Smart Bus – Intelligent Transportation Dashboard</h1>
+        <p>Real-time AI-based Safety & Passenger Monitoring</p>
+    </header>
+
+    <main class="dashboard">
+
+        <section class="card">
+            <h2>🧑‍✈️ Driver Monitoring</h2>
+            <p>Status: <span id="driver-status">---</span></p>
+            <p>Attention Score: <span id="attention-score">---</span></p>
+            <progress id="attention-bar" max="100" value="0"></progress>
+
+            <div class="bar">
+                <div id="attentionBar"></div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🧍 Passenger Info</h2>
+            <p>Passenger Count: <span id="passenger-count">---</span></p>
+            <p>Seat Vacancy: <span id="seat-vacancy">---</span></p>
+        </section>
+
+        <section class="card">
+            <h2>🚨 Alerts & Decisions</h2>
+            <ul id="alerts-list">
+                <li>No alerts</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

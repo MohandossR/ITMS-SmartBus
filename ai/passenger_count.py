@@ -2,6 +2,27 @@ import cv2
 from ultralytics import YOLO
 from collections import deque
 
+import json
+
+def update_passenger_state(count, vacant_seats, overcrowded):
+    try:
+        with open("ai/shared_state.json", "r+") as f:
+            try:
+                data = json.load(f)
+            except:
+                data = {}
+
+            data["passenger_count"] = count
+            data["seat_vacancy"] = vacant_seats
+            data["overcrowded"] = overcrowded
+
+            f.seek(0)
+            json.dump(data, f)
+            f.truncate()
+    except:
+        pass
+
+
 model = YOLO("yolov8n.pt")
 TOTAL_SEATS = 40
 
@@ -38,6 +59,13 @@ while True:
     status = "NORMAL"
     if stable_count > MAX_PASSENGERS:
         status = "OVERCROWDED ⚠️"
+    overcrowded = stable_count > MAX_PASSENGERS
+
+    update_passenger_state(
+        count=stable_count,
+        vacant_seats=vacant_seats,
+        overcrowded=overcrowded
+    )
 
     cv2.putText(frame, f"Passengers: {stable_count}", (20,40),
                 cv2.FONT_HERSHEY_SIMPLEX, 1.1, (255,255,255), 3)

@@ -1,6 +1,26 @@
 import cv2
 import time
 import requests
+import json
+
+def update_shared_state(status, attention_score, fire_detected):
+    try:
+        with open("ai/shared_state.json", "r+") as f:
+            try:
+                data = json.load(f)
+            except:
+                data = {}
+
+            data["driver_status"] = status
+            data["attention_score"] = attention_score
+            data["fire_detected"] = fire_detected
+
+            f.seek(0)
+            json.dump(data, f)
+            f.truncate()
+    except:
+        pass
+
 
 
 last_face_time = time.time()
@@ -126,6 +146,15 @@ while True:
     
     total_time = alert_time + drowsy_time + danger_time
     attention_score = int((alert_time / total_time) * 100) if total_time > 0 else 100
+
+    fire_detected = fire_pixels > 1500
+
+    update_shared_state(
+        status=status,
+        attention_score=attention_score,
+        fire_detected=fire_detected
+    )
+
 
     cv2.putText(frame, f"Driver Attention: {attention_score}%",
         (20,80),
