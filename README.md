@@ -40,3 +40,12 @@ Detailed project documentation is available in the `docs/` folder.
 
 - Documentation:
   - Project explanation and reports
+  - ## Frontend Dashboard
+The frontend provides a simple web dashboard for:
+- Driver alert status
+- Passenger count display
+- Vehicle speed monitoring
+- Safety alerts
+
+This dashboard is used for live demo during Round-1.
+
