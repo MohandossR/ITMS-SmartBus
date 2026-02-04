@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Bus – ITMS Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+
+</head>
+<body>
+
+    <span id="driver"></span>
+<span id="attention"></span>
+<span id="passengers"></span>
+<span id="seats"></span>
+<ul id="alerts"></ul>
+
+
+<h1>Smart Bus – Intelligent Transportation System</h1>
+<p class="subtitle">AI-powered Safety & Passenger Monitoring</p>
+
+<div class="nav">
+    <a href="/driver">🚗 Driver Monitoring</a>
+    <a href="/passenger">🧍 Passenger Monitoring</a>
+    <a href="/vehicle-monitor">🛠 Vehicle Monitoring</a>
+    <a href="/vehicles/view">📊 Vehicle Records</a>
+
+</div>
+
+<div class="card">
+    <h2>Live AI Summary</h2>
+    <p><b>Driver Status:</b> {{ ai.driver_status }}</p>
+    <p><b>Attention Score:</b> {{ ai.attention_score }}%</p>
+    <p><b>Passenger Count:</b> {{ ai.passenger_count }}</p>
+    <p><b>Seat Vacancy:</b> {{ ai.seat_vacancy }}</p>
+</div>
+
+<div class="card alert">
+    <h2>AI Decisions</h2>
+    {% if ai.decisions %}
+        <ul>
+            {% for d in ai.decisions %}
+                <li>{{ d }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No alerts</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

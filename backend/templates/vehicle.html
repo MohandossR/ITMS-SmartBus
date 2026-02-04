@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vehicle Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<h1>All Vehicle Records</h1>
+
+<div class="card wide">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Vehicle ID</th>
+                <th>Speed (km/h)</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for v in vehicles %}
+            <tr>
+                <td>{{ v.vehicle_id }}</td>
+                <td>{{ v.speed }}</td>
+                <td>{{ v.latitude }}</td>
+                <td>{{ v.longitude }}</td>
+                <td>{{ v.timestamp }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="nav center">
+    <a href="/dashboard">⬅ Back to Dashboard</a>
+</div>
+
+</body>
+</html>

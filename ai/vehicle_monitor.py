@@ -1,28 +1,36 @@
 import random
 import time
+import requests
 
-MAX_SPEED = 60
-MAX_TEMP = 95 
+BACKEND_URL = "http://127.0.0.1:5000/ai/status"
+
+print("Vehicle Parameter Monitor started...")
 
 while True:
-    speed = random.randint(30, 90)
+    # 🔧 Simulated sensor values
+    speed = random.randint(30, 100)
     engine_temp = random.randint(70, 110)
-    brake_pressure = random.choice([0, 1])
+    fuel_level = random.randint(5, 100)
 
-    alerts = []
+    # ✅ DEFINE FLAGS (THIS WAS MISSING)
+    overspeed = speed > 60
+    engine_overheat = engine_temp > 95
+    low_fuel = fuel_level < 20
 
-    if speed > MAX_SPEED:
-        alerts.append("OVERSPEED ⚠️")
+    payload = {
+        "overspeed": overspeed,
+        "low_fuel": low_fuel,
+        "engine_overheat": engine_overheat
+    }
 
-    if engine_temp > MAX_TEMP:
-        alerts.append("ENGINE OVERHEAT 🔥")
+    try:
+        requests.post(
+            BACKEND_URL,
+            json=payload,
+            timeout=0.3
+        )
+        print("Vehicle data sent:", payload)
+    except Exception as e:
+        print("Error sending vehicle data:", e)
 
-    if brake_pressure == 1 and speed > 40:
-        alerts.append("EMERGENCY BRAKE ⚠️")
-
-    print(f"Speed: {speed} km/h | Temp: {engine_temp}°C")
-    for alert in alerts:
-        print("ALERT:", alert)
-
-    print("-" * 40)
     time.sleep(2)

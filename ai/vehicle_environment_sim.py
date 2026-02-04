@@ -1,35 +1,21 @@
 import random
 import time
+import requests
 
-def get_vehicle_state():
-    speed = random.choice(["NORMAL", "OVERSPEED"])
-    fuel = random.choice(["OK", "LOW"])
-    engine_temp = random.choice(["NORMAL", "OVERHEAT"])
-    brake = random.choice(["NORMAL", "EMERGENCY"])
+BACKEND_URL = "http://127.0.0.1:5000/vehicle"
 
-    return {
-        "speed": speed,
-        "fuel": fuel,
-        "engine_temp": engine_temp,
-        "brake": brake
+while True:
+    payload = {
+        "vehicle_id": "BUS_101",
+        "speed": random.randint(30, 90),
+        "latitude": round(random.uniform(12.90, 13.10), 6),
+        "longitude": round(random.uniform(80.10, 80.30), 6)
     }
 
-def get_environment_state():
-    traffic = random.choice(["LOW", "MEDIUM", "HIGH"])
-    terrain = random.choice(["URBAN", "HIGHWAY", "SLOPE"])
+    try:
+        requests.post(BACKEND_URL, json=payload, timeout=1)
+        print("Sent vehicle data:", payload)
+    except:
+        print("Backend not reachable")
 
-    return {
-        "traffic": traffic,
-        "terrain": terrain
-    }
-
-if __name__ == "__main__":
-    while True:
-        vehicle = get_vehicle_state()
-        environment = get_environment_state()
-
-        print("VEHICLE STATE:", vehicle)
-        print("ENVIRONMENT STATE:", environment)
-        print("-" * 50)
-
-        time.sleep(2)
+    time.sleep(2)

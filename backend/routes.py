@@ -1,9 +1,49 @@
-from flask import request, jsonify
+from flask import request, jsonify, render_template
 from models import Vehicle, vehicle_history
 from alerts import check_speed_alert
 
+# Store latest AI status (live)
+latest_ai_status = {
+    "driver_status": "UNKNOWN",
+    "attention_score": 0,
+    "passenger_count": 0,
+    "seat_vacancy": 0,
+    "fire_detected": False,
+    "dangerous_driving": False,
+    "decisions": []
+}
+
+
 def register_routes(app):
 
+    # =====================================================
+    # 🔹 HOME / DASHBOARD
+    # =====================================================
+    @app.route("/")
+    @app.route("/dashboard")
+    def dashboard():
+        return render_template(
+            "index.html",
+            ai=latest_ai_status
+        )
+
+    # =====================================================
+    # 🔹 DRIVER MONITOR PAGE
+    # =====================================================
+    @app.route("/driver")
+    def driver_page():
+        return render_template("driver.html", ai=latest_ai_status)
+
+    # =====================================================
+    # 🔹 PASSENGER MONITOR PAGE
+    # =====================================================
+    @app.route("/passenger")
+    def passenger_page():
+        return render_template("passenger.html", ai=latest_ai_status)
+
+    # =====================================================
+    # 🔹 VEHICLE DATA (API)
+    # =====================================================
     @app.route("/vehicle", methods=["POST"])
     def receive_vehicle_data():
         data = request.get_json()
@@ -15,9 +55,7 @@ def register_routes(app):
             longitude=data.get("longitude", 0.0)
         )
 
-        # Store vehicle data
         vehicle_history.append(vehicle)
-
         alert_result = check_speed_alert(vehicle)
 
         return jsonify({
@@ -33,43 +71,33 @@ def register_routes(app):
             "vehicles": [v.to_dict() for v in vehicle_history]
         })
 
-    @app.route("/vehicles/view", methods=["GET"])
+    # =====================================================
+    # 🔹 VEHICLE HISTORY PAGE (HTML)
+    # =====================================================
+    @app.route("/vehicles/view")
     def view_vehicles_html():
-        html = """
-        <html>
-        <head>
-            <title>Vehicle Records</title>
-            <style>
-                table { border-collapse: collapse; width: 100%; }
-                th, td { border: 1px solid black; padding: 8px; text-align: center; }
-                th { background-color: #4CAF50; color: white; }
-                tr:nth-child(even) { background-color: #f2f2f2; }
-            </style>
-        </head>
-        <body>
-            <h2>All Vehicle Records</h2>
-            <table>
-                <tr>
-                    <th>Vehicle ID</th>
-                    <th>Speed</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                    <th>Timestamp</th>
-                </tr>
-        """
-        for v in vehicle_history:
-            html += f"""
-                <tr>
-                    <td>{v.vehicle_id}</td>
-                    <td>{v.speed}</td>
-                    <td>{v.latitude}</td>
-                    <td>{v.longitude}</td>
-                    <td>{v.timestamp}</td>
-                </tr>
-            """
-        html += """
-            </table>
-        </body>
-        </html>
-        """
-        return html
+        return render_template(
+            "vehicle.html",
+            vehicles=vehicle_history
+        )
+
+    # =====================================================
+    # 🔹 AI STATUS API (FROM AI MODULES)
+    # =====================================================
+    @app.route("/ai/status", methods=["POST"])
+    def receive_ai_status():
+        global latest_ai_status
+        latest_ai_status = request.get_json()
+        return jsonify({
+            "status": "AI status updated",
+            "ai_status": latest_ai_status
+        })
+    
+
+    @app.route("/ai/status", methods=["GET"])
+    def get_ai_status():
+        return jsonify(latest_ai_status)
+    
+    @app.route("/vehicle-monitor")
+    def vehicle_monitor_page():
+        return render_template("vehicle_monitor.html", ai=latest_ai_status)

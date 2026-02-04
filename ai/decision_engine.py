@@ -19,15 +19,21 @@ def collect_ai_inputs():
         "passenger_count": passenger_count,
         "seat_vacancy": data.get("seat_vacancy", 0),
         "fire": data.get("fire_detected", False),
-        "dangerous_driving": driver_status in ["DANGEROUS DRIVING ⚠️", "DRIVER DISTRACTED 📱"],
+        "dangerous_driving": driver_status in [
+            "DANGEROUS DRIVING ⚠️",
+            "DRIVER DISTRACTED 📱"
+        ],
         "overcrowded": data.get("overcrowded", passenger_count > 40),
-        "overspeed": False,
-        "low_fuel": False,
-        "engine_overheat": False
+
+        # ✅ LIVE VEHICLE DATA
+        "overspeed": data.get("overspeed", False),
+        "low_fuel": data.get("low_fuel", False),
+        "engine_overheat": data.get("engine_overheat", False)
     }
 
     return ai_inputs
 
+    
 
 
 def send_to_backend(payload):
