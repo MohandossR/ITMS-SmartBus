@@ -11,8 +11,6 @@ async function fetchAIStatus() {
         } else {
             statusEl.style.color = "red";
         }
-
-
         document.getElementById("driverStatus").innerText =
             data.driver_status || "Waiting...";
 
