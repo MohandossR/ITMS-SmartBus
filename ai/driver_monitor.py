@@ -1,5 +1,7 @@
 import cv2
 import time
+import requests
+
 
 last_face_time = time.time()
 DANGER_TIME = 1.5  

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Bus – ITMS Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Smart Bus – Intelligent Transportation Dashboard</h1>
+        <p>Real-time AI-based Safety & Passenger Monitoring</p>
+    </header>
+
+    <main class="dashboard">
+
+        <section class="card">
+            <h2>🧑‍✈️ Driver Monitoring</h2>
+            <p>Status: <span id="driverStatus">---</span></p>
+            <p>Attention Score:</p>
+            <div class="bar">
+                <div id="attentionBar"></div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🧍 Passenger Info</h2>
+            <p>Passenger Count: <span id="passengerCount">---</span></p>
+            <p>Seat Vacancy: <span id="seatVacancy">---</span></p>
+        </section>
+
+        <section class="card">
+            <h2>🚨 Alerts & Decisions</h2>
+            <ul id="decisions">
+                <li>No alerts</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
