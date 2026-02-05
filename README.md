@@ -48,4 +48,7 @@ The frontend provides a simple web dashboard for:
 - Safety alerts
 
 This dashboard is used for live demo during Round-1.
+<<<<<<< HEAD
 
+=======
+>>>>>>> frontend-dev

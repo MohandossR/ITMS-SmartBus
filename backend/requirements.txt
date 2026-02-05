@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 flask
 opencv-python
 ultralytics
+=======
+flask
+opencv-python
+ultralytics
+>>>>>>> frontend-dev

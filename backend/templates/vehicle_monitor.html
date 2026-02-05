@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,3 +59,65 @@ updateVehicleMonitor();
 
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vehicle Parameter Monitoring</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script>
+        function updateVehicleMonitor() {
+            fetch("/ai/status")
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("overspeed").innerText =
+                    data.overspeed ? "YES ⚠️" : "NO";
+
+                document.getElementById("low_fuel").innerText =
+                    data.low_fuel ? "YES ⛽" : "NO";
+
+                document.getElementById("engine_overheat").innerText =
+                    data.engine_overheat ? "YES 🔥" : "NO";
+            })
+            .catch(err => console.log(err));
+    }
+
+setInterval(updateVehicleMonitor, 1000);
+updateVehicleMonitor();
+</script>
+
+</head>
+<body>
+
+<h1>🛠 Vehicle Parameter Monitoring</h1>
+<p class="subtitle">AI-based Speed, Fuel & Engine Health Analysis</p>
+
+<div class="card">
+    <h2>Vehicle Parameters</h2>
+    <p><b>Overspeed:</b> <span id="overspeed">--</span></p>
+    <p><b>Low Fuel:</b> <span id="low_fuel">--</span></p>
+    <p><b>Engine Overheat:</b> <span id="engine_overheat">--</span></p>
+
+</div>
+
+<div class="card alert">
+    <h2>AI Decisions</h2>
+    {% if ai.decisions %}
+        <ul>
+            {% for d in ai.decisions %}
+                <li>{{ d }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No alerts</p>
+    {% endif %}
+</div>
+
+<div class="nav center">
+    <a href="/dashboard">⬅ Back to Dashboard</a>
+</div>
+
+</body>
+</html>
+>>>>>>> frontend-dev

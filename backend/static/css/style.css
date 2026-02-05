@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
     background: radial-gradient(circle at top, #c91527, #10252a);
     color: #ffffff;
@@ -112,3 +113,119 @@ a {
     text-decoration: none;
 }
 
+=======
+body {
+    background: radial-gradient(circle at top, #c91527, #10252a);
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    
+}
+
+h1 {
+    text-align: center;
+}
+
+.subtitle {
+    text-align: center;
+    color: #bbb;
+}
+
+.nav {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.nav a {
+    margin: 10px;
+    padding: 12px 20px;
+    background: #222;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.nav a:hover {
+    background: #444;
+    letter-spacing: 1px;
+}
+
+.card {
+    background:rgba(255,255,255,0.08) ;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px auto;
+    width: 60%;
+    backdrop-filter: blur(12px);
+
+}
+
+.alert {
+    background: rgba(255,255,255,0.08);
+    padding: 15px;
+    border-radius: 10px;
+    width: 60%;
+    margin: auto;
+    backdrop-filter: blur(12px);
+}
+
+.bar {
+    background: #333;
+    height: 15px;
+    border-radius: 10px;
+}
+
+.fill {
+    background: #9b59b6;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.note {
+    text-align: center;
+    color: #aaa;
+    margin-top: 20px;
+}
+
+.wide {
+    width: 90%;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.data-table th {
+    background: #2c2c2c;
+    color: #fff;
+    padding: 12px;
+    text-align: center;
+}
+
+.data-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+}
+
+.data-table tr:hover {
+    background: #292929;
+}
+
+.center {
+    text-align: center;
+}
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+>>>>>>> frontend-dev

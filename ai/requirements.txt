@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 opencv-python
 numpy
 mediapipe
 imutils
+=======
+opencv-python
+numpy
+mediapipe
+imutils
+>>>>>>> frontend-dev

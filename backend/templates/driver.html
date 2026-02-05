@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,3 +28,34 @@
 
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Driver Monitoring</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <meta http-equiv="refresh" content="2">
+</head>
+<body>
+
+<a href="/dashboard">⬅ Back</a>
+
+<h1>🚗 Driver Monitoring</h1>
+
+<div class="card">
+    <p><b>Status:</b> {{ ai.driver_status }}</p>
+    <p><b>Attention Score:</b> {{ ai.attention_score }}%</p>
+
+    <div class="bar">
+        <div class="fill" style="width: {{ ai.attention_score|default(0) }}%"></div>
+    </div>
+</div>
+
+<div class="note">
+    Live camera-based detection is running in the AI module window.
+</div>
+
+</body>
+</html>
+>>>>>>> frontend-dev
