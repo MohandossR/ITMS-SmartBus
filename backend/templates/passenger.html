@@ -17,7 +17,7 @@
     <p><b>Seat Vacancy:</b> {{ ai.seat_vacancy }}</p>
 </div>
 
-{% if ai["passenger_count"] > 30 %}
+{% if ai.get("passenger_count",0) > 30 %}
 <div class="alert">
     ⚠️ Overcrowding Detected
 </div>

@@ -87,10 +87,12 @@ def register_routes(app):
     @app.route("/ai/status", methods=["POST"])
     def receive_ai_status():
         global latest_ai_status
-        latest_ai_status = request.get_json()
+        data = request.get_json()
+        for key,value in data.items():
+            latest_ai_status[key]=value;
         return jsonify({
-            "status": "AI status updated",
-            "ai_status": latest_ai_status
+            "status": "AI status updates",
+            "ai_status" : latest_ai_status
         })
     
 
