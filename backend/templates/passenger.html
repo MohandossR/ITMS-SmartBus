@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Passenger Monitoring</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <meta http-equiv="refresh" content="2">
+</head>
+<body>
+
+<a href="/dashboard">⬅ Back</a>
+
+<h1>🧍 Passenger Monitoring</h1>
+
+<div class="card">
+    <p><b>Passenger Count:</b> {{ ai.passenger_count }}</p>
+    <p><b>Seat Vacancy:</b> {{ ai.seat_vacancy }}</p>
+</div>
+
+{% if ai.get("passenger_count",0) > 30 %}
+<div class="alert">
+    ⚠️ Overcrowding Detected
+</div>
+{% endif %}
+
+<div class="note">
+    YOLO-based real-time passenger detection running in AI module window.
+</div>
+
+</body>
+</html>
